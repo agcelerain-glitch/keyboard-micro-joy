@@ -5,7 +5,10 @@ import styles from './App.module.css'
 
 type Mode = 'overlay' | 'typing'
 
-const TARGET: Record<Mode, number> = { overlay: 200, typing: 500 }
+const TARGET: Record<Mode, { w: number; h: number }> = {
+  overlay: { w: 200, h: 200 },
+  typing:  { w: 500, h: 500 },
+}
 
 export default function App() {
   const [mode, setMode] = useState<Mode>('overlay')
@@ -33,16 +36,15 @@ export default function App() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  const size = TARGET[mode]
-  const wMatch = Math.abs(viewport.w - size) <= 2
-  const hMatch = Math.abs(viewport.h - size) <= 2
+  const { w, h } = TARGET[mode]
+  const matched = Math.abs(viewport.w - w) <= 2 && Math.abs(viewport.h - h) <= 2
 
   return (
     <div className={styles.root}>
-      <div className={styles.appBox} style={{ width: size, height: size }}>
+      <div className={styles.appBox} style={{ width: w, height: h }}>
         {mode === 'overlay'
           ? <OverlayMode layoutId={layoutId} onLayoutChange={setLayoutId} />
-          : <TypingMode />}
+          : <TypingMode layoutId={layoutId} onLayoutChange={setLayoutId} />}
       </div>
 
       <button className={styles.toggleBtn} onClick={toggleMode}>
@@ -50,9 +52,9 @@ export default function App() {
         <span className={styles.shortcutHint}>Ctrl+Alt+M</span>
       </button>
 
-      <div className={`${styles.viewportInfo} ${wMatch && hMatch ? styles.matched : ''}`}>
+      <div className={`${styles.viewportInfo} ${matched ? styles.matched : ''}`}>
         {viewport.w} &times; {viewport.h}
-        <span className={styles.target}> / 目標 {size} &times; {size}</span>
+        <span className={styles.target}> / {w} &times; {h}</span>
       </div>
     </div>
   )

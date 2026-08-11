@@ -10,19 +10,27 @@ export interface KeyboardState {
 type Action =
   | { type: 'down'; code: string }
   | { type: 'up'; code: string }
+  | { type: 'clear' }
 
+// Space は常に両手演出
+const BOTH_CODES = new Set(['Space'])
+
+// Meta (Win/Cmd) キーはOS干渉でkeyupが来ないため廃止
 const LEFT_CODES = new Set([
   'Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5',
   'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT',
   'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG',
   'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB',
-  'ControlLeft', 'MetaLeft', 'AltLeft',
+  'ControlLeft', 'AltLeft',
   'F1', 'F2', 'F3', 'F4', 'F5', 'F6',
   'Escape',
 ])
 
 function getSide(codes: Set<string>): PawSide {
   if (codes.size === 0) return null
+  for (const code of codes) {
+    if (BOTH_CODES.has(code)) return 'both'
+  }
   let hasLeft = false
   let hasRight = false
   for (const code of codes) {
@@ -34,6 +42,9 @@ function getSide(codes: Set<string>): PawSide {
 }
 
 function reducer(state: KeyboardState, action: Action): KeyboardState {
+  if (action.type === 'clear') {
+    return { pressed: new Set(), pawSide: null }
+  }
   const next = new Set(state.pressed)
   if (action.type === 'down') next.add(action.code)
   else next.delete(action.code)
@@ -48,11 +59,16 @@ export function useKeyboard(): KeyboardState {
   useEffect(() => {
     const onDown = (e: KeyboardEvent) => dispatch({ type: 'down', code: e.code })
     const onUp = (e: KeyboardEvent) => dispatch({ type: 'up', code: e.code })
+    // ウィンドウフォーカス喪失時（Win/Alt-Tab等）に全キーをクリア
+    const onBlur = () => dispatch({ type: 'clear' })
+
     window.addEventListener('keydown', onDown)
     window.addEventListener('keyup', onUp)
+    window.addEventListener('blur', onBlur)
     return () => {
       window.removeEventListener('keydown', onDown)
       window.removeEventListener('keyup', onUp)
+      window.removeEventListener('blur', onBlur)
     }
   }, [])
 

@@ -17,7 +17,7 @@ const keys: KeyDef[] = [
   { code: 'Equal',      label: '=',  label2: '+',  row: 0, col: 12, width: 1,    side: 'right' },
   { code: 'Backspace',  label: 'BS',               row: 0, col: 13, width: 2,    side: 'right' },
 
-  // Row 1 — Top row (QWERTY)
+  // Row 1 — QWERTY
   { code: 'Tab',         label: 'Tab',              row: 1, col: 0,  width: 1.5,  side: 'left'  },
   { code: 'KeyQ',        label: 'Q',                row: 1, col: 1,  width: 1,    side: 'left'  },
   { code: 'KeyW',        label: 'W',                row: 1, col: 2,  width: 1,    side: 'left'  },
@@ -33,7 +33,7 @@ const keys: KeyDef[] = [
   { code: 'BracketRight',label: ']',  label2: '}',  row: 1, col: 12, width: 1,    side: 'right' },
   { code: 'Backslash',   label: '\\', label2: '|',  row: 1, col: 13, width: 1.5,  side: 'right' },
 
-  // Row 2 — Home row (ASDF)
+  // Row 2 — Home row
   { code: 'CapsLock',  label: 'Caps',               row: 2, col: 0,  width: 1.75, side: 'left'  },
   { code: 'KeyA',      label: 'A',                  row: 2, col: 1,  width: 1,    side: 'left'  },
   { code: 'KeyS',      label: 'S',                  row: 2, col: 2,  width: 1,    side: 'left'  },
@@ -48,7 +48,7 @@ const keys: KeyDef[] = [
   { code: 'Quote',     label: "'",  label2: '"',    row: 2, col: 11, width: 1,    side: 'right' },
   { code: 'Enter',     label: 'Enter',              row: 2, col: 12, width: 2.25, side: 'right' },
 
-  // Row 3 — Bottom row (ZXCV)
+  // Row 3 — ZXCV
   { code: 'ShiftLeft',  label: 'Shift',             row: 3, col: 0,  width: 2.25, side: 'left'  },
   { code: 'KeyZ',       label: 'Z',                 row: 3, col: 1,  width: 1,    side: 'left'  },
   { code: 'KeyX',       label: 'X',                 row: 3, col: 2,  width: 1,    side: 'left'  },
@@ -62,15 +62,12 @@ const keys: KeyDef[] = [
   { code: 'Slash',      label: '/',  label2: '?',   row: 3, col: 10, width: 1,    side: 'right' },
   { code: 'ShiftRight', label: 'Shift',             row: 3, col: 11, width: 2.75, side: 'right' },
 
-  // Row 4 — Space row
-  { code: 'ControlLeft',  label: 'Ctrl',            row: 4, col: 0,  width: 1.25, side: 'left'  },
-  { code: 'MetaLeft',     label: 'Win',             row: 4, col: 1,  width: 1.25, side: 'left'  },
-  { code: 'AltLeft',      label: 'Alt',             row: 4, col: 2,  width: 1.25, side: 'left'  },
-  { code: 'Space',        label: 'Space',           row: 4, col: 3,  width: 6.25, side: 'right' },
-  { code: 'AltRight',     label: 'Alt',             row: 4, col: 4,  width: 1.25, side: 'right' },
-  { code: 'MetaRight',    label: 'Win',             row: 4, col: 5,  width: 1.25, side: 'right' },
-  { code: 'ContextMenu',  label: 'Menu',            row: 4, col: 6,  width: 1.25, side: 'right' },
-  { code: 'ControlRight', label: 'Ctrl',            row: 4, col: 7,  width: 1.25, side: 'right' },
+  // Row 4 — Space row (Meta/Win キーは廃止)
+  { code: 'ControlLeft',  label: 'Ctrl',            row: 4, col: 0,  width: 1.5,  side: 'left'  },
+  { code: 'AltLeft',      label: 'Alt',             row: 4, col: 1,  width: 1.5,  side: 'left'  },
+  { code: 'Space',        label: 'Space',           row: 4, col: 2,  width: 7,    side: 'right' },
+  { code: 'AltRight',     label: 'Alt',             row: 4, col: 3,  width: 1.5,  side: 'right' },
+  { code: 'ControlRight', label: 'Ctrl',            row: 4, col: 4,  width: 1.5,  side: 'right' },
 ]
 
 export const US_LAYOUT: KeyboardLayout = {

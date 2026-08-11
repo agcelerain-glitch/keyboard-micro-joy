@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
+import KeyboardSection from '../KeyboardSection/KeyboardSection'
 import styles from './TypingMode.module.css'
 
 interface QuestionsData {
@@ -10,7 +11,12 @@ function pickRandom(arr: string[], exclude?: string): string {
   return filtered[Math.floor(Math.random() * filtered.length)]
 }
 
-export default function TypingMode() {
+interface Props {
+  layoutId: 'us' | 'jis'
+  onLayoutChange: (id: 'us' | 'jis') => void
+}
+
+export default function TypingMode({ layoutId, onLayoutChange }: Props) {
   const [questions, setQuestions] = useState<string[]>([])
   const [current, setCurrent] = useState('')
   const [progress, setProgress] = useState(0)
@@ -63,27 +69,37 @@ export default function TypingMode() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [questions, nextQuestion])
 
-  if (questions.length === 0) {
-    return <div className={styles.root}><p className={styles.loading}>Loading...</p></div>
-  }
-
   const typed = current.slice(0, progress)
   const remaining = current.slice(progress)
 
   return (
     <div className={styles.root}>
-      <div className={styles.question}>
-        <span className={styles.typed}>{typed}</span>
-        <span className={styles.cursor} />
-        <span className={styles.remaining}>{remaining}</span>
+      {/* ── Typing area ── */}
+      <div className={styles.typingArea}>
+        {questions.length === 0 ? (
+          <p className={styles.loading}>Loading...</p>
+        ) : (
+          <>
+            <div className={styles.question}>
+              <span className={styles.typed}>{typed}</span>
+              <span className={styles.cursor} />
+              <span className={styles.remaining}>{remaining}</span>
+            </div>
+            <div className={styles.progressTrack}>
+              <div
+                className={styles.progressBar}
+                style={{ width: `${current.length > 0 ? (progress / current.length) * 100 : 0}%` }}
+              />
+            </div>
+            <p className={styles.hint}>Enter でスキップ</p>
+          </>
+        )}
       </div>
-      <div className={styles.progress}>
-        <div
-          className={styles.progressBar}
-          style={{ width: `${current.length > 0 ? (progress / current.length) * 100 : 0}%` }}
-        />
+
+      {/* ── Keyboard section (same design as overlay mode) ── */}
+      <div className={styles.keyboardWrapper}>
+        <KeyboardSection layoutId={layoutId} onLayoutChange={onLayoutChange} />
       </div>
-      <p className={styles.hint}>Enter でスキップ</p>
     </div>
   )
 }

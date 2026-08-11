@@ -18,7 +18,7 @@ const keys: KeyDef[] = [
   { code: 'IntlYen',     label: '¥',  label2: '|',   row: 0, col: 13, width: 1,    side: 'right' },
   { code: 'Backspace',   label: 'BS',                row: 0, col: 14, width: 2,    side: 'right' },
 
-  // Row 1 — Top row (JIS: @[ differ from US)
+  // Row 1 — QWERTY (JIS: @[ differ)
   { code: 'Tab',          label: 'Tab',               row: 1, col: 0,  width: 1.5,  side: 'left'  },
   { code: 'KeyQ',         label: 'Q',                 row: 1, col: 1,  width: 1,    side: 'left'  },
   { code: 'KeyW',         label: 'W',                 row: 1, col: 2,  width: 1,    side: 'left'  },
@@ -34,7 +34,7 @@ const keys: KeyDef[] = [
   { code: 'BracketRight', label: '[',  label2: '{',   row: 1, col: 12, width: 1,    side: 'right' },
   { code: 'Enter',        label: 'Enter',             row: 1, col: 13, width: 1.5,  side: 'right' },
 
-  // Row 2 — Home row (JIS: :] differ from US)
+  // Row 2 — Home row (JIS: :] differ)
   { code: 'CapsLock',  label: '英数',                 row: 2, col: 0,  width: 1.75, side: 'left'  },
   { code: 'KeyA',      label: 'A',                   row: 2, col: 1,  width: 1,    side: 'left'  },
   { code: 'KeyS',      label: 'S',                   row: 2, col: 2,  width: 1,    side: 'left'  },
@@ -49,7 +49,7 @@ const keys: KeyDef[] = [
   { code: 'Quote',     label: ':',  label2: '*',     row: 2, col: 11, width: 1,    side: 'right' },
   { code: 'Backslash', label: ']',  label2: '}',     row: 2, col: 12, width: 1,    side: 'right' },
 
-  // Row 3 — Bottom row (JIS: IntlRo between Shift and Z)
+  // Row 3 — ZXCV (JIS: IntlRo after Slash)
   { code: 'ShiftLeft',  label: 'Shift',              row: 3, col: 0,  width: 2.25, side: 'left'  },
   { code: 'KeyZ',       label: 'Z',                  row: 3, col: 1,  width: 1,    side: 'left'  },
   { code: 'KeyX',       label: 'X',                  row: 3, col: 2,  width: 1,    side: 'left'  },
@@ -61,19 +61,18 @@ const keys: KeyDef[] = [
   { code: 'Comma',      label: ',',  label2: '<',    row: 3, col: 8,  width: 1,    side: 'right' },
   { code: 'Period',     label: '.',  label2: '>',    row: 3, col: 9,  width: 1,    side: 'right' },
   { code: 'Slash',      label: '/',  label2: '?',    row: 3, col: 10, width: 1,    side: 'right' },
-  { code: 'IntlRo',     label: '\\', label2: '_',   row: 3, col: 11, width: 1,    side: 'right' },
+  { code: 'IntlRo',     label: '\\', label2: '_',    row: 3, col: 11, width: 1,    side: 'right' },
   { code: 'ShiftRight', label: 'Shift',              row: 3, col: 12, width: 1.75, side: 'right' },
 
-  // Row 4 — Space row (JIS: 無変換, 変換, かな)
+  // Row 4 — Space row JIS (Meta/Win キーは廃止)
   { code: 'ControlLeft',  label: 'Ctrl',             row: 4, col: 0,  width: 1.25, side: 'left'  },
-  { code: 'MetaLeft',     label: 'Win',              row: 4, col: 1,  width: 1.25, side: 'left'  },
-  { code: 'AltLeft',      label: 'Alt',              row: 4, col: 2,  width: 1.25, side: 'left'  },
-  { code: 'NonConvert',   label: '無変換',            row: 4, col: 3,  width: 1.5,  side: 'left'  },
-  { code: 'Space',        label: 'Space',            row: 4, col: 4,  width: 3.5,  side: 'right' },
-  { code: 'Convert',      label: '変換',             row: 4, col: 5,  width: 1.5,  side: 'right' },
-  { code: 'KanaMode',     label: 'かな',             row: 4, col: 6,  width: 1.5,  side: 'right' },
-  { code: 'AltRight',     label: 'Alt',             row: 4, col: 7,  width: 1.25, side: 'right' },
-  { code: 'ControlRight', label: 'Ctrl',            row: 4, col: 8,  width: 1.25, side: 'right' },
+  { code: 'AltLeft',      label: 'Alt',              row: 4, col: 1,  width: 1.25, side: 'left'  },
+  { code: 'NonConvert',   label: '無変換',            row: 4, col: 2,  width: 1.5,  side: 'left'  },
+  { code: 'Space',        label: 'Space',            row: 4, col: 3,  width: 3.5,  side: 'right' },
+  { code: 'Convert',      label: '変換',             row: 4, col: 4,  width: 1.5,  side: 'right' },
+  { code: 'KanaMode',     label: 'かな',             row: 4, col: 5,  width: 1.5,  side: 'right' },
+  { code: 'AltRight',     label: 'Alt',              row: 4, col: 6,  width: 1.25, side: 'right' },
+  { code: 'ControlRight', label: 'Ctrl',             row: 4, col: 7,  width: 1.25, side: 'right' },
 ]
 
 export const JIS_LAYOUT: KeyboardLayout = {
