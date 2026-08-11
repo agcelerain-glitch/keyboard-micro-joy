@@ -2,13 +2,16 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import KeyboardSection from '../KeyboardSection/KeyboardSection'
 import styles from './TypingMode.module.css'
 
-interface QuestionsData {
-  questions: string[]
-}
-
 function pickRandom(arr: string[], exclude?: string): string {
   const filtered = arr.length > 1 ? arr.filter(q => q !== exclude) : arr
   return filtered[Math.floor(Math.random() * filtered.length)]
+}
+
+function parseQuestions(text: string): string[] {
+  return text
+    .split('\n')
+    .map(l => l.trim())
+    .filter(l => l.length > 0 && !l.startsWith('#'))
 }
 
 interface Props {
@@ -27,11 +30,12 @@ export default function TypingMode({ layoutId, onLayoutChange }: Props) {
   useEffect(() => { progressRef.current = progress }, [progress])
 
   useEffect(() => {
-    fetch('/data/questions.json')
-      .then(r => r.json())
-      .then((data: QuestionsData) => {
-        setQuestions(data.questions)
-        setCurrent(pickRandom(data.questions))
+    fetch('/data/questions.txt')
+      .then(r => r.text())
+      .then(text => {
+        const qs = parseQuestions(text)
+        setQuestions(qs)
+        setCurrent(pickRandom(qs))
         setProgress(0)
       })
   }, [])
@@ -69,7 +73,7 @@ export default function TypingMode({ layoutId, onLayoutChange }: Props) {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [questions, nextQuestion])
 
-  const typed = current.slice(0, progress)
+  const typed     = current.slice(0, progress)
   const remaining = current.slice(progress)
 
   return (
@@ -96,7 +100,7 @@ export default function TypingMode({ layoutId, onLayoutChange }: Props) {
         )}
       </div>
 
-      {/* ── Keyboard section (same design as overlay mode) ── */}
+      {/* ── Keyboard section (固定 200px, 中央揃え) ── */}
       <div className={styles.keyboardWrapper}>
         <KeyboardSection layoutId={layoutId} onLayoutChange={onLayoutChange} />
       </div>

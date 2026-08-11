@@ -3,11 +3,13 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center; /* 子要素を横中央揃え */
 }
 
 /* ── Typing area fills the top portion ── */
 .typingArea {
   flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,8 +75,9 @@
   margin: 0;
 }
 
-/* ── Keyboard section pinned at bottom ── */
+/* ── Keyboard section: 固定幅 200px を中央に置く ── */
 .keyboardWrapper {
   flex-shrink: 0;
-  border-top: 1px solid #1e1e2e;
+  padding-bottom: 4px;
+  border-top: 1px solid #1a1a2e;
 }

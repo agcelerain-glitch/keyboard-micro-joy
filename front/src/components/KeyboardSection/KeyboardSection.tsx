@@ -9,7 +9,7 @@ const LAYOUTS: KeyboardLayout[] = [US_LAYOUT, JIS_LAYOUT]
 // bongo.cat スプライトシート定数 (800×450 × 2frame × 2theme)
 const CAT_W = 800
 const CAT_H = 450
-const SCALE = 0.25 // 200px / 800px
+const SCALE = 0.25 // 表示幅 200px / スプライト幅 800px
 
 interface Props {
   layoutId: 'us' | 'jis'
@@ -20,24 +20,24 @@ export default function KeyboardSection({ layoutId, onLayoutChange }: Props) {
   const { pressed, pawSide } = useKeyboard()
   const layout = LAYOUTS.find(l => l.id === layoutId) ?? US_LAYOUT
 
-  const leftDown = pawSide === 'left' || pawSide === 'both'
-  const rightDown = pawSide === 'right' || pawSide === 'both'
+  // 正規アプリに合わせて左右を逆に割り当て
+  const leftDown  = pawSide === 'right' || pawSide === 'both'
+  const rightDown = pawSide === 'left'  || pawSide === 'both'
 
-  const displayW = Math.round(CAT_W * SCALE)
-  const displayH = Math.round(CAT_H * SCALE)
+  const displayW = Math.round(CAT_W * SCALE)   // 200
+  const displayH = Math.round(CAT_H * SCALE)   // 113
 
   return (
     <div className={styles.root}>
       {/* ── Cat display ── */}
       <div className={styles.catWrapper} style={{ width: displayW, height: displayH }}>
-        <div className={styles.catInner} style={{ width: CAT_W, height: CAT_H, transform: `scale(${SCALE})` }}>
-          {/* cat body */}
+        <div
+          className={styles.catInner}
+          style={{ width: CAT_W, height: CAT_H, transform: `scale(${SCALE})` }}
+        >
           <div className={`${styles.layer} ${styles.catHead}`} />
-          {/* keyboard instrument layer */}
           <div className={`${styles.layer} ${styles.catKeyboard}`} />
-          {/* left paw */}
-          <div className={`${styles.layer} ${styles.pawLeft} ${leftDown ? styles.down : ''}`} />
-          {/* right paw */}
+          <div className={`${styles.layer} ${styles.pawLeft}  ${leftDown  ? styles.down : ''}`} />
           <div className={`${styles.layer} ${styles.pawRight} ${rightDown ? styles.down : ''}`} />
         </div>
       </div>

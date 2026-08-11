@@ -1,0 +1,46 @@
+# =====================================================================
+# questions.txt — タイピング問題ファイル
+# 使い方: 1行1問。空行と # 始まりの行は無視されます。
+#
+# 【日本語について】
+#   IMEを経由する入力は検出できないため、日本語はローマ字で記述してください。
+#   例: 「こんにちは」→ konnichiwa
+#       「プログラミング」→ puroguramingu
+#
+# 【追加方法】
+#   このファイルを直接編集して行を追加するだけで反映されます。
+# =====================================================================
+
+# --- 英語: プログラミング用語 ---
+keyboard
+function
+variable
+interface
+component
+typescript
+algorithm
+refactor
+console
+async
+await
+promise
+callback
+closure
+module
+import
+export
+render
+useState
+useEffect
+boolean
+integer
+string
+object
+array
+method
+return
+class
+extend
+python
+
+# --- ここに自分の問題を追加 ---
