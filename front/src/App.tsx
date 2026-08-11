@@ -45,6 +45,13 @@ export default function App() {
     return () => el.removeEventListener('mousedown', onMouseDown)
   }, [])
 
+  // Tauri: × ボタン → ウィンドウをトレイに隠す
+  const handleHide = useCallback(() => {
+    import('@tauri-apps/api/window').then(({ getCurrentWindow }) => {
+      getCurrentWindow().hide()
+    })
+  }, [])
+
   const toggleMode = useCallback(() => {
     setMode(prev => (prev === 'overlay' ? 'typing' : 'overlay'))
   }, [])
@@ -83,10 +90,19 @@ export default function App() {
   return (
     <div className={styles.root} style={IS_TAURI ? { background: 'transparent' } : {}}>
 
-      {/* ドラッグハンドル（フレームレスウィンドウ移動用） */}
+      {/* タイトルバー: ドラッグ移動 + トレイ格納ボタン */}
       <div ref={titleBarRef} className={styles.titleBar} data-tauri-drag-region>
         <span className={styles.grip}>⠿</span>
         <span className={styles.titleText}>keyboard-micro-joy</span>
+        {IS_TAURI && (
+          <button
+            className={styles.closeBtn}
+            onClick={handleHide}
+            title="トレイに格納"
+          >
+            ×
+          </button>
+        )}
       </div>
 
       <div className={styles.content}>

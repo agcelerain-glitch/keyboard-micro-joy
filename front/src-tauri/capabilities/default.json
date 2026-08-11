@@ -1,12 +1,16 @@
 {
   "identifier": "default",
-  "description": "Default capability — window control + opener",
+  "description": "Default capability — window control + tray + opener",
   "windows": ["main"],
   "permissions": [
     "core:default",
     "core:window:allow-set-size",
     "core:window:allow-set-position",
     "core:window:allow-start-dragging",
+    "core:window:allow-hide",
+    "core:window:allow-show",
+    "core:window:allow-set-focus",
+    "core:window:allow-is-visible",
     "opener:default"
   ]
 }
