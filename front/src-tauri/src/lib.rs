@@ -8,7 +8,6 @@ use tauri::{
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .plugin(tauri_plugin_tray::init())
         .setup(|app| {
             let toggle = MenuItem::with_id(app, "toggle", "表示 / 非表示", true, None::<&str>)?;
             let quit   = MenuItem::with_id(app, "quit",   "終了",          true, None::<&str>)?;
