@@ -15,6 +15,9 @@ dist-ssr
 # Tauri build output (Rust compilation cache — large)
 src-tauri/target/
 
+# Tauri generated schemas (自動生成、コミット不要)
+src-tauri/gen/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
