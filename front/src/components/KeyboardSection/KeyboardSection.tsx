@@ -10,7 +10,7 @@ const LAYOUTS: KeyboardLayout[] = [US_LAYOUT, JIS_LAYOUT]
 const CAT_W = 800
 const CAT_H = 450
 const SCALE = 0.25          // 表示幅 200px / スプライト幅 800px
-const CAT_DISPLAY_H = 45    // 表示高さ (px) ← スプライット下部の余白をここで調整
+const CAT_DISPLAY_H = 75    // 表示高さ (px) ← スプライット下部の余白をここで調整
 
 interface Props {
   layoutId: 'us' | 'jis'
