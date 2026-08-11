@@ -50,10 +50,32 @@ extend
 python
 
 # [lang:ja]
-# --- 日本語: プログラミング用語 ---
+# --- 日本語: 基本単語 ---
+neko|ねこ
+inu|いぬ
+sakura|さくら
+hana|はな
+yuki|ゆき
+sora|そら
+mizu|みず
+kaze|かぜ
+kawaii|かわいい
+nihon|にほん
+taberu|たべる
+nomimono|のみもの
+mainiti|まいにち
+atarashii|あたらしい
+muzukashii|むずかしい
+
+# --- 日本語: フレーズ ---
 konnitiha|こんにちは
 puroguramingu|プログラミング
 hayaokihasanmonnotoku|早起きは三文の徳
+arigatou|ありがとう
+sumimasen|すみません
+yoroshiku|よろしく
+ganbare|がんばれ
+otsukaresama|おつかれさま
 
 
 # --- ここに自分の問題を追加 ---
