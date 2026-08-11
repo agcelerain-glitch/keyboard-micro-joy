@@ -4,20 +4,63 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
 }
 
+/* ── タイトルバー（ドラッグ移動領域） ── */
+.titleBar {
+  width: 100%;
+  height: 24px;
+  background: #070710;
+  border-bottom: 1px solid #1a1a2e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.titleBar:active {
+  cursor: grabbing;
+}
+
+.grip {
+  color: #2a2a4a;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.titleText {
+  font-size: 9px;
+  color: #3a3a5a;
+  letter-spacing: 1px;
+  font-family: 'Courier New', monospace;
+}
+
+/* ── コンテンツエリア ── */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 16px 16px;
+}
+
+/* ── アプリボックス ── */
 .appBox {
   background: #12121f;
   border: 1px solid #2a2a4a;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  transition: width 120ms ease, height 120ms ease;
+  transition: width 150ms ease, height 150ms ease;
   box-shadow: 0 0 0 1px #1a1a2e, 0 4px 24px rgba(0, 0, 0, 0.6);
 }
 
+/* ── モード切替ボタン ── */
 .toggleBtn {
   background: #1e1e30;
   border: 1px solid #3a3a5a;
@@ -42,6 +85,7 @@
   font-size: 9px;
 }
 
+/* ── Web 版: Viewport インジケーター ── */
 .viewportInfo {
   position: fixed;
   bottom: 8px;

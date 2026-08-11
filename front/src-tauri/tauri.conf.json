@@ -13,12 +13,12 @@
     "windows": [
       {
         "title": "keyboard-micro-joy",
-        "width": 280,
-        "height": 520,
+        "width": 240,
+        "height": 296,
         "resizable": true,
         "alwaysOnTop": true,
         "decorations": false,
-        "transparent": false
+        "transparent": true
       }
     ],
     "security": {
