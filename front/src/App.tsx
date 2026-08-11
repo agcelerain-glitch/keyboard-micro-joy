@@ -30,19 +30,32 @@ export default function App() {
     if (IS_TAURI) document.body.classList.add('tauri-mode')
   }, [])
 
-  // Tauri: タイトルバードラッグ（data-tauri-drag-region だけでは v2 で動かないため明示呼び出し）
+  // Tauri: タイトルバードラッグ
+  // ボタン等の interactive 要素をクリックした場合は startDragging を呼ばない
   useEffect(() => {
     if (!IS_TAURI) return
     const el = titleBarRef.current
     if (!el) return
     const onMouseDown = (e: MouseEvent) => {
       if (e.button !== 0) return
+      if ((e.target as HTMLElement).closest('button, a, input, select')) return
       import('@tauri-apps/api/window').then(({ getCurrentWindow }) => {
         getCurrentWindow().startDragging()
       })
     }
     el.addEventListener('mousedown', onMouseDown)
     return () => el.removeEventListener('mousedown', onMouseDown)
+  }, [])
+
+  // Tauri: Alt+F4 等のシステムクローズ要求もトレイ格納に変換
+  useEffect(() => {
+    if (!IS_TAURI) return
+    import('@tauri-apps/api/window').then(({ getCurrentWindow }) => {
+      getCurrentWindow().onCloseRequested(async (e) => {
+        e.preventDefault()
+        await getCurrentWindow().hide()
+      })
+    })
   }, [])
 
   // Tauri: × ボタン → ウィンドウをトレイに隠す
