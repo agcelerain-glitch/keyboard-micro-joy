@@ -56,16 +56,6 @@ fn rdev_to_code(key: &rdev::Key) -> Option<&'static str> {
         ScrollLock  => "ScrollLock",
         Pause       => "Pause",
         NumLock     => "NumLock",
-        KpReturn   => "NumpadEnter",
-        KpMinus    => "NumpadSubtract",
-        KpPlus     => "NumpadAdd",
-        KpMultiply => "NumpadMultiply",
-        KpDivide   => "NumpadDivide",
-        KpDecimal  => "NumpadDecimal",
-        Kp0 => "Numpad0", Kp1 => "Numpad1", Kp2 => "Numpad2",
-        Kp3 => "Numpad3", Kp4 => "Numpad4", Kp5 => "Numpad5",
-        Kp6 => "Numpad6", Kp7 => "Numpad7", Kp8 => "Numpad8",
-        Kp9 => "Numpad9",
         _ => return None,
     })
 }
@@ -117,7 +107,7 @@ pub fn run() {
                 .icon(app.default_window_icon().unwrap().clone())
                 .tooltip("keyboard-micro-joy")
                 .menu(&menu)
-                .menu_on_left_click(false)
+                .show_menu_on_left_click(false)
                 .on_menu_event(|app, event| match event.id.as_ref() {
                     "toggle" => toggle_window(app),
                     "quit"   => app.exit(0),
