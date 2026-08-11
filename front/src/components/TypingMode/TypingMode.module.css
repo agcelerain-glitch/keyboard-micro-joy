@@ -3,10 +3,40 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* 子要素を横中央揃え */
+  align-items: center;
 }
 
-/* ── Typing area fills the top portion ── */
+/* ── 言語フィルターバー ── */
+.filterBar {
+  display: flex;
+  gap: 6px;
+  padding-top: 10px;
+  flex-shrink: 0;
+}
+
+.filterBtn {
+  background: #1e1e2e;
+  border: 1px solid #3a3a5a;
+  color: #555;
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  font-family: inherit;
+}
+
+.filterBtn:hover {
+  border-color: #666;
+  color: #999;
+}
+
+.filterBtnActive {
+  border-color: #e94560;
+  color: #e94560;
+}
+
+/* ── タイピングエリア ── */
 .typingArea {
   flex: 1;
   width: 100%;
@@ -15,7 +45,7 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
-  padding: 24px 32px 16px;
+  padding: 16px 32px 16px;
   min-height: 0;
 }
 
@@ -24,6 +54,21 @@
   font-size: 13px;
 }
 
+/* ── 問題表示ラッパー ── */
+.questionWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* 日本語モード: ローマ字行の下にアンダーラインを引く */
+.questionWrapJa .question {
+  border-bottom: 1px solid #3a3a5a;
+  padding-bottom: 8px;
+}
+
+/* ── ローマ字入力行 ── */
 .question {
   font-size: 32px;
   font-family: 'Courier New', monospace;
@@ -54,6 +99,16 @@
   color: #555;
 }
 
+/* ── 日本語参照行 (アンダーライン下) ── */
+.jpRef {
+  font-size: 20px;
+  color: #4a4a6a;
+  padding-top: 8px;
+  letter-spacing: 0.1em;
+  user-select: none;
+}
+
+/* ── プログレスバー ── */
 .progressTrack {
   width: 70%;
   height: 3px;
@@ -75,7 +130,7 @@
   margin: 0;
 }
 
-/* ── Keyboard section: 固定幅 200px を中央に置く ── */
+/* ── キーボードセクション: 固定幅 200px を中央に置く ── */
 .keyboardWrapper {
   flex-shrink: 0;
   padding-bottom: 4px;
