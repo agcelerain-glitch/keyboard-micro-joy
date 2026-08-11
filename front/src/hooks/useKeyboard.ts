@@ -59,14 +59,16 @@ export function useKeyboard(): KeyboardState {
   const [state, dispatch] = useReducer(reducer, INITIAL)
 
   useEffect(() => {
-    // ── ブラウザ版: DOM イベント（フォーカス中のみ） ──
+    // DOM イベント（フォーカス中に確実に反応）
+    const onDown = (e: KeyboardEvent) => dispatch({ type: 'down', code: e.code })
+    const onUp   = (e: KeyboardEvent) => dispatch({ type: 'up',   code: e.code })
+    window.addEventListener('keydown', onDown)
+    window.addEventListener('keyup',   onUp)
+
     if (!IS_TAURI) {
-      const onDown = (e: KeyboardEvent) => dispatch({ type: 'down', code: e.code })
-      const onUp   = (e: KeyboardEvent) => dispatch({ type: 'up',   code: e.code })
+      // ブラウザ版: フォーカス喪失時にキー状態をリセット
       const onBlur = () => dispatch({ type: 'clear' })
-      window.addEventListener('keydown', onDown)
-      window.addEventListener('keyup',   onUp)
-      window.addEventListener('blur',    onBlur)
+      window.addEventListener('blur', onBlur)
       return () => {
         window.removeEventListener('keydown', onDown)
         window.removeEventListener('keyup',   onUp)
@@ -74,7 +76,8 @@ export function useKeyboard(): KeyboardState {
       }
     }
 
-    // ── Tauri 版: rdev グローバルキーイベント（非フォーカス時も動作） ──
+    // Tauri 版: rdev グローバルイベントを追加で購読（非フォーカス時に反応）
+    // DOM と rdev が同時に発火しても Set は冪等なので二重反応は起きない
     let unlisten: (() => void) | undefined
     import('@tauri-apps/api/event')
       .then(({ listen }) =>
@@ -84,7 +87,11 @@ export function useKeyboard(): KeyboardState {
       )
       .then(fn => { unlisten = fn })
 
-    return () => { unlisten?.() }
+    return () => {
+      window.removeEventListener('keydown', onDown)
+      window.removeEventListener('keyup',   onUp)
+      unlisten?.()
+    }
   }, [])
 
   return state
