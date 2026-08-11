@@ -53,23 +53,38 @@ function reducer(state: KeyboardState, action: Action): KeyboardState {
 
 const INITIAL: KeyboardState = { pressed: new Set(), pawSide: null }
 
+const IS_TAURI = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window
+
 export function useKeyboard(): KeyboardState {
   const [state, dispatch] = useReducer(reducer, INITIAL)
 
   useEffect(() => {
-    const onDown = (e: KeyboardEvent) => dispatch({ type: 'down', code: e.code })
-    const onUp = (e: KeyboardEvent) => dispatch({ type: 'up', code: e.code })
-    // ウィンドウフォーカス喪失時（Win/Alt-Tab等）に全キーをクリア
-    const onBlur = () => dispatch({ type: 'clear' })
-
-    window.addEventListener('keydown', onDown)
-    window.addEventListener('keyup', onUp)
-    window.addEventListener('blur', onBlur)
-    return () => {
-      window.removeEventListener('keydown', onDown)
-      window.removeEventListener('keyup', onUp)
-      window.removeEventListener('blur', onBlur)
+    // ── ブラウザ版: DOM イベント（フォーカス中のみ） ──
+    if (!IS_TAURI) {
+      const onDown = (e: KeyboardEvent) => dispatch({ type: 'down', code: e.code })
+      const onUp   = (e: KeyboardEvent) => dispatch({ type: 'up',   code: e.code })
+      const onBlur = () => dispatch({ type: 'clear' })
+      window.addEventListener('keydown', onDown)
+      window.addEventListener('keyup',   onUp)
+      window.addEventListener('blur',    onBlur)
+      return () => {
+        window.removeEventListener('keydown', onDown)
+        window.removeEventListener('keyup',   onUp)
+        window.removeEventListener('blur',    onBlur)
+      }
     }
+
+    // ── Tauri 版: rdev グローバルキーイベント（非フォーカス時も動作） ──
+    let unlisten: (() => void) | undefined
+    import('@tauri-apps/api/event')
+      .then(({ listen }) =>
+        listen<{ code: string; pressed: boolean }>('global_key', ({ payload }) => {
+          dispatch({ type: payload.pressed ? 'down' : 'up', code: payload.code })
+        })
+      )
+      .then(fn => { unlisten = fn })
+
+    return () => { unlisten?.() }
   }, [])
 
   return state
