@@ -1,0 +1,67 @@
+.root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.loading {
+  color: #666;
+  font-size: 14px;
+}
+
+.question {
+  font-size: 36px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  letter-spacing: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.typed {
+  color: #e94560;
+}
+
+.cursor {
+  display: inline-block;
+  width: 3px;
+  height: 40px;
+  background: #e94560;
+  margin: 0 1px;
+  animation: blink 800ms step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.remaining {
+  color: #666;
+}
+
+.progress {
+  width: 80%;
+  height: 4px;
+  background: #2a2a3e;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: #e94560;
+  border-radius: 2px;
+  transition: width 60ms linear;
+}
+
+.hint {
+  font-size: 11px;
+  color: #444;
+  margin: 0;
+}
