@@ -14,8 +14,6 @@
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
-  /* 下端の余白を削るため、実際のスプライト高さより少し狭める */
-  margin-bottom: -6px;
 }
 
 .catInner {

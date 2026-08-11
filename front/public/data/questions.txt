@@ -43,4 +43,12 @@ class
 extend
 python
 
+
+# --- 日本語: プログラミング用語 ---
+konnitiha
+puroguramingu
+hayaokihasanmonnotoku
+
+
+
 # --- ここに自分の問題を追加 ---

@@ -9,7 +9,8 @@ const LAYOUTS: KeyboardLayout[] = [US_LAYOUT, JIS_LAYOUT]
 // bongo.cat スプライトシート定数 (800×450 × 2frame × 2theme)
 const CAT_W = 800
 const CAT_H = 450
-const SCALE = 0.25 // 表示幅 200px / スプライト幅 800px
+const SCALE = 0.25          // 表示幅 200px / スプライト幅 800px
+const CAT_DISPLAY_H = 85    // 表示高さ (px) ← スプライット下部の余白をここで調整
 
 interface Props {
   layoutId: 'us' | 'jis'
@@ -25,18 +26,17 @@ export default function KeyboardSection({ layoutId, onLayoutChange }: Props) {
   const rightDown = pawSide === 'left'  || pawSide === 'both'
 
   const displayW = Math.round(CAT_W * SCALE)   // 200
-  const displayH = Math.round(CAT_H * SCALE)   // 113
 
   return (
     <div className={styles.root}>
       {/* ── Cat display ── */}
-      <div className={styles.catWrapper} style={{ width: displayW, height: displayH }}>
+      <div className={styles.catWrapper} style={{ width: displayW, height: CAT_DISPLAY_H }}>
         <div
           className={styles.catInner}
           style={{ width: CAT_W, height: CAT_H, transform: `scale(${SCALE})` }}
         >
           <div className={`${styles.layer} ${styles.catHead}`} />
-          <div className={`${styles.layer} ${styles.catKeyboard}`} />
+          {/* keyboard.png は CSS グリッドと重複するため除外 */}
           <div className={`${styles.layer} ${styles.pawLeft}  ${leftDown  ? styles.down : ''}`} />
           <div className={`${styles.layer} ${styles.pawRight} ${rightDown ? styles.down : ''}`} />
         </div>
