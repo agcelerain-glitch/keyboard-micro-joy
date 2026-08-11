@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import OverlayMode from './components/OverlayMode/OverlayMode'
 import TypingMode from './components/TypingMode/TypingMode'
 import styles from './App.module.css'
@@ -23,10 +23,26 @@ export default function App() {
   const [mode, setMode]       = useState<Mode>('overlay')
   const [layoutId, setLayout] = useState<'us' | 'jis'>('us')
   const [viewport, setViewport] = useState({ w: window.innerWidth, h: window.innerHeight })
+  const titleBarRef = useRef<HTMLDivElement>(null)
 
   // Tauri: body を透過モードに設定
   useEffect(() => {
     if (IS_TAURI) document.body.classList.add('tauri-mode')
+  }, [])
+
+  // Tauri: タイトルバードラッグ（data-tauri-drag-region だけでは v2 で動かないため明示呼び出し）
+  useEffect(() => {
+    if (!IS_TAURI) return
+    const el = titleBarRef.current
+    if (!el) return
+    const onMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return
+      import('@tauri-apps/api/window').then(({ getCurrentWindow }) => {
+        getCurrentWindow().startDragging()
+      })
+    }
+    el.addEventListener('mousedown', onMouseDown)
+    return () => el.removeEventListener('mousedown', onMouseDown)
   }, [])
 
   const toggleMode = useCallback(() => {
@@ -68,7 +84,7 @@ export default function App() {
     <div className={styles.root} style={IS_TAURI ? { background: 'transparent' } : {}}>
 
       {/* ドラッグハンドル（フレームレスウィンドウ移動用） */}
-      <div className={styles.titleBar} data-tauri-drag-region>
+      <div ref={titleBarRef} className={styles.titleBar} data-tauri-drag-region>
         <span className={styles.grip}>⠿</span>
         <span className={styles.titleText}>keyboard-micro-joy</span>
       </div>
